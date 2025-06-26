@@ -505,4 +505,48 @@ footer {
 }
 #close-modal-btn:hover {
   color: #2563eb;
+}
+
+/* 顶部导航栏样式 */
+nav {
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 2rem;
+}
+nav ul li {
+  display: inline-block;
+}
+nav ul li a.nav-link {
+  color: #2563eb;
+  text-decoration: none;
+  padding: 0.2em 0.8em;
+  border-radius: 8px;
+  transition: background 0.2s, color 0.2s;
+}
+nav ul li a.nav-link:hover {
+  background: #e0e7ff;
+  color: #1e40af;
+}
+
+/* 弹窗介绍内容样式 */
+#main-modal .text-4xl {
+  font-size: 2.2rem;
+}
+#main-modal .text-2xl {
+  font-size: 1.4rem;
+}
+#main-modal .text-lg {
+  font-size: 1.1rem;
+}
+#main-modal button {
+  margin-top: 1.5rem;
 } 
