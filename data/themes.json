@@ -1,0 +1,26 @@
+[
+  {
+    "key": "cyberpunk",
+    "name": "赛博朋克",
+    "desc": "霓虹高光，未来感强烈",
+    "colors": ["#00fff7", "#ff00ea", "#23234d"],
+    "font": "Orbitron",
+    "components": ["按钮", "卡片", "表单"]
+  },
+  {
+    "key": "minimalist",
+    "name": "极简主义",
+    "desc": "明亮留白，干净线条",
+    "colors": ["#7ed957", "#f8fdf7", "#222"],
+    "font": "Lato",
+    "components": ["按钮", "卡片"]
+  },
+  {
+    "key": "y2k",
+    "name": "千禧复古Y2K",
+    "desc": "复古甜心，潮流色彩",
+    "colors": ["#ff4ff1", "#fdf4f9", "#0000ff"],
+    "font": "Bungee",
+    "components": ["按钮", "卡片"]
+  }
+] 

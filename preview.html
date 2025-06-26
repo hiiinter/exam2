@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>实时预览 - 智能代码辅助设计平台</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body class="bento-bg min-h-screen">
+  <nav class="flex items-center gap-4 px-8 py-4 bg-white shadow-sm sticky top-0 z-50">
+    <a href="index.html" class="text-blue-500 hover:underline flex items-center"><i class="fas fa-arrow-left mr-2"></i>返回首页</a>
+    <span class="text-xl font-bold ml-4">实时预览</span>
+  </nav>
+  <main class="max-w-3xl mx-auto mt-8 px-4">
+    <h2 class="text-2xl font-bold mb-6 text-blue-600">桌面/移动端实时预览</h2>
+    <div class="flex gap-4 mb-4">
+      <button id="desktop-view" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">桌面端</button>
+      <button id="mobile-view" class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400">移动端</button>
+      <select id="theme-switch" class="border rounded px-2 py-1 ml-4">
+        <option value="">默认主题</option>
+        <option value="cyberpunk">赛博朋克</option>
+        <option value="minimalist">极简主义</option>
+        <option value="y2k">千禧复古Y2K</option>
+      </select>
+      <button id="insert-btn" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">插入按钮</button>
+      <button id="insert-card" class="px-4 py-2 bg-purple-500 text-white rounded hover:bg-purple-600">插入卡片</button>
+      <button id="export-html" class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600">导出HTML</button>
+    </div>
+    <div id="preview-area" class="bg-white rounded shadow p-8 min-h-[200px] flex items-center justify-center relative">
+      <div id="desktop-preview">这里是桌面端预览内容</div>
+      <div id="mobile-preview" style="display:none;">这里是移动端预览内容</div>
+    </div>
+  </main>
+  <script>
+    // 简单切换演示+插入组件+主题切换+导出
+    const desktopBtn = document.getElementById('desktop-view');
+    const mobileBtn = document.getElementById('mobile-view');
+    const desktopPreview = document.getElementById('desktop-preview');
+    const mobilePreview = document.getElementById('mobile-preview');
+    const themeSwitch = document.getElementById('theme-switch');
+    const previewArea = document.getElementById('preview-area');
+    desktopBtn.onclick = function() {
+      desktopBtn.classList.add('bg-blue-500','text-white');
+      desktopBtn.classList.remove('bg-gray-300','text-gray-700');
+      mobileBtn.classList.remove('bg-blue-500','text-white');
+      mobileBtn.classList.add('bg-gray-300','text-gray-700');
+      desktopPreview.style.display = '';
+      mobilePreview.style.display = 'none';
+    };
+    mobileBtn.onclick = function() {
+      mobileBtn.classList.add('bg-blue-500','text-white');
+      mobileBtn.classList.remove('bg-gray-300','text-gray-700');
+      desktopBtn.classList.remove('bg-blue-500','text-white');
+      desktopBtn.classList.add('bg-gray-300','text-gray-700');
+      desktopPreview.style.display = 'none';
+      mobilePreview.style.display = '';
+    };
+    themeSwitch.onchange = function() {
+      previewArea.className = 'bg-white rounded shadow p-8 min-h-[200px] flex items-center justify-center relative';
+      if (themeSwitch.value) previewArea.classList.add('theme-'+themeSwitch.value);
+    };
+    document.getElementById('insert-btn').onclick = function() {
+      desktopPreview.innerHTML += "<button class='px-4 py-2 bg-blue-500 text-white rounded m-2'>示例按钮</button>";
+      mobilePreview.innerHTML += "<button class='px-4 py-2 bg-blue-500 text-white rounded m-2'>示例按钮</button>";
+    };
+    document.getElementById('insert-card').onclick = function() {
+      desktopPreview.innerHTML += "<div class='px-4 py-2 bg-gray-100 rounded m-2'>示例卡片</div>";
+      mobilePreview.innerHTML += "<div class='px-4 py-2 bg-gray-100 rounded m-2'>示例卡片</div>";
+    };
+    document.getElementById('export-html').onclick = function() {
+      const html = desktopPreview.innerHTML;
+      const blob = new Blob([html], {type:'text/html'});
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'preview.html';
+      a.click();
+    };
+  </script>
+</body>
+</html> 

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>组件市场 - 智能代码辅助设计平台</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body class="bento-bg min-h-screen">
+  <nav class="flex items-center gap-4 px-8 py-4 bg-white shadow-sm sticky top-0 z-50">
+    <a href="index.html" class="text-blue-500 hover:underline flex items-center"><i class="fas fa-arrow-left mr-2"></i>返回首页</a>
+    <span class="text-xl font-bold ml-4">组件市场</span>
+  </nav>
+  <main class="max-w-5xl mx-auto mt-8 px-4">
+    <h2 class="text-2xl font-bold mb-6 text-blue-600">浏览组件模板</h2>
+    <div class="flex gap-4 mb-6">
+      <input id="component-search" type="text" class="border rounded px-3 py-2 w-64" placeholder="搜索组件名称...">
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6" id="component-list"></div>
+  </main>
+  <!-- 组件详情弹窗预留区 -->
+  <div id="component-detail-modal" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+    <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-8 relative animate__animated animate__fadeIn">
+      <button id="close-component-detail" class="absolute top-4 right-4 text-2xl text-gray-400 hover:text-blue-500"><i class="fas fa-times"></i></button>
+      <div id="component-detail-content"></div>
+    </div>
+  </div>
+  <script>
+    // 动态加载组件数据
+    let allComponents = [];
+    async function loadComponents() {
+      const res = await fetch('data/components.json');
+      allComponents = await res.json();
+      renderComponentList();
+    }
+    function renderComponentList() {
+      const search = document.getElementById('component-search').value.trim().toLowerCase();
+      const list = document.getElementById('component-list');
+      let comps = allComponents.filter(c => c.name.includes(search) || c.key.includes(search));
+      list.innerHTML = comps.map(c => `
+        <div class="theme-card p-6 rounded-xl shadow cursor-pointer hover:shadow-lg relative" data-component="${c.key}">
+          <div class="theme-title text-lg font-bold mb-2">${c.name}</div>
+          <div class="text-xs text-gray-400 mb-2">${c.key}</div>
+          <div class="h-16 flex items-center justify-center mb-2">${c.html}</div>
+          <div class="text-gray-600 mb-2">${c.desc}</div>
+          <button class="copy-btn absolute top-2 right-2 text-xl text-gray-300 hover:text-blue-400" title="复制代码"><i class="fas fa-copy"></i></button>
+        </div>
+      `).join('');
+      // 绑定卡片点击
+      list.querySelectorAll('.theme-card').forEach(card => {
+        card.onclick = function(e) {
+          if (e.target.classList.contains('copy-btn') || e.target.closest('.copy-btn')) return;
+          const c = allComponents.find(x=>x.key===card.dataset.component);
+          document.getElementById('component-detail-modal').classList.remove('hidden');
+          document.getElementById('component-detail-content').innerHTML = `
+            <div class='text-xl font-bold mb-2'>${c.name}</div>
+            <div class='mb-2 text-gray-500'>${c.key}</div>
+            <div class='mb-2'>${c.html}</div>
+            <div class='mb-2'>${c.desc}</div>
+            <div class='mb-2'><button id='copy-detail-code' class='px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600'>复制代码</button></div>
+            <pre class='bg-gray-100 rounded p-2'>${c.code}</pre>
+          `;
+          document.getElementById('copy-detail-code').onclick = function() {
+            navigator.clipboard.writeText(c.code);
+            this.textContent = '已复制!';
+            setTimeout(()=>{this.textContent='复制代码';},1200);
+          };
+        };
+      });
+      // 复制按钮
+      list.querySelectorAll('.copy-btn').forEach((btn,i) => {
+        btn.onclick = function(e) {
+          e.stopPropagation();
+          const code = allComponents[i].code;
+          navigator.clipboard.writeText(code);
+          btn.classList.remove('text-gray-300');
+          btn.classList.add('text-blue-400');
+          setTimeout(()=>{
+            btn.classList.remove('text-blue-400');
+            btn.classList.add('text-gray-300');
+          },1200);
+        };
+      });
+    }
+    document.getElementById('close-component-detail').onclick = function() {
+      document.getElementById('component-detail-modal').classList.add('hidden');
+    };
+    document.getElementById('component-search').oninput = renderComponentList;
+    loadComponents();
+  </script>
+</body>
+</html> 

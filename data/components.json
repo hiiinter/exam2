@@ -1,0 +1,23 @@
+[
+  {
+    "key": "button",
+    "name": "按钮",
+    "desc": "常用操作按钮",
+    "html": "<button class='px-4 py-2 bg-blue-500 text-white rounded'>示例按钮</button>",
+    "code": "<button class='px-4 py-2 bg-blue-500 text-white rounded'>示例按钮</button>"
+  },
+  {
+    "key": "card",
+    "name": "卡片",
+    "desc": "信息展示卡片",
+    "html": "<div class='px-4 py-2 bg-gray-100 rounded'>示例卡片</div>",
+    "code": "<div class='px-4 py-2 bg-gray-100 rounded'>示例卡片</div>"
+  },
+  {
+    "key": "form",
+    "name": "表单",
+    "desc": "用户输入表单",
+    "html": "<form><input type='text' placeholder='输入' class='border rounded px-2 py-1'></form>",
+    "code": "<form><input type='text' placeholder='输入' class='border rounded px-2 py-1'></form>"
+  }
+] 

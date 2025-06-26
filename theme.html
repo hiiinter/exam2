@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>主题库 - 智能代码辅助设计平台</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body class="bento-bg min-h-screen">
+  <nav class="flex items-center gap-4 px-8 py-4 bg-white shadow-sm sticky top-0 z-50">
+    <a href="index.html" class="text-blue-500 hover:underline flex items-center"><i class="fas fa-arrow-left mr-2"></i>返回首页</a>
+    <span class="text-xl font-bold ml-4">主题库</span>
+  </nav>
+  <main class="max-w-5xl mx-auto mt-8 px-4">
+    <h2 class="text-2xl font-bold mb-6 text-blue-600">浏览主题</h2>
+    <div class="flex gap-4 mb-6">
+      <input id="theme-search" type="text" class="border rounded px-3 py-2 w-64" placeholder="搜索主题名称...">
+      <button id="theme-fav-toggle" class="px-4 py-2 bg-yellow-400 text-white rounded hover:bg-yellow-500">只看收藏</button>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6" id="theme-list"></div>
+  </main>
+  <!-- 主题详情弹窗预留区 -->
+  <div id="theme-detail-modal" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+    <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-8 relative animate__animated animate__fadeIn">
+      <button id="close-theme-detail" class="absolute top-4 right-4 text-2xl text-gray-400 hover:text-blue-500"><i class="fas fa-times"></i></button>
+      <div id="theme-detail-content"></div>
+    </div>
+  </div>
+  <script>
+    // 动态加载主题数据
+    let allThemes = [];
+    let showFavOnly = false;
+    let favThemes = JSON.parse(localStorage.getItem('favThemes')||'[]');
+    async function loadThemes() {
+      const res = await fetch('data/themes.json');
+      allThemes = await res.json();
+      renderThemeList();
+    }
+    function renderThemeList() {
+      const search = document.getElementById('theme-search').value.trim().toLowerCase();
+      const list = document.getElementById('theme-list');
+      let themes = allThemes.filter(t => t.name.includes(search) || t.key.includes(search));
+      if (showFavOnly) themes = themes.filter(t => favThemes.includes(t.key));
+      list.innerHTML = themes.map(t => `
+        <div class="theme-card p-6 rounded-xl shadow cursor-pointer hover:shadow-lg relative" data-theme="${t.key}">
+          <div class="theme-title text-lg font-bold mb-2">${t.name}</div>
+          <div class="text-xs text-gray-400 mb-2">${t.key}</div>
+          <div class="flex gap-1 mb-2">${t.colors.map(c=>`<span style='display:inline-block;width:18px;height:18px;border-radius:50%;background:${c}'></span>`).join('')}</div>
+          <div class="text-gray-600 mb-2">${t.desc}</div>
+          <button class="fav-btn absolute top-2 right-2 text-xl ${favThemes.includes(t.key)?'text-yellow-400':'text-gray-300'}" title="收藏"><i class="fas fa-star"></i></button>
+        </div>
+      `).join('');
+      // 绑定卡片点击
+      list.querySelectorAll('.theme-card').forEach(card => {
+        card.onclick = function(e) {
+          if (e.target.classList.contains('fav-btn') || e.target.closest('.fav-btn')) return;
+          const t = allThemes.find(x=>x.key===card.dataset.theme);
+          document.getElementById('theme-detail-modal').classList.remove('hidden');
+          document.getElementById('theme-detail-content').innerHTML = `
+            <div class='text-xl font-bold mb-2'>${t.name}</div>
+            <div class='mb-2 text-gray-500'>${t.key}</div>
+            <div class='mb-2'>主色：${t.colors.map(c=>`<span style='display:inline-block;width:18px;height:18px;border-radius:50%;background:${c}'></span>`).join('')}</div>
+            <div class='mb-2'>字体：${t.font}</div>
+            <div class='mb-2'>支持组件：${t.components.join('、')}</div>
+            <div class='mb-4'>${t.desc}</div>
+          `;
+        };
+      });
+      // 收藏按钮
+      list.querySelectorAll('.fav-btn').forEach((btn,i) => {
+        btn.onclick = function(e) {
+          e.stopPropagation();
+          const key = allThemes[i].key;
+          if (favThemes.includes(key)) {
+            favThemes = favThemes.filter(k=>k!==key);
+          } else {
+            favThemes.push(key);
+          }
+          localStorage.setItem('favThemes',JSON.stringify(favThemes));
+          renderThemeList();
+        };
+      });
+    }
+    document.getElementById('close-theme-detail').onclick = function() {
+      document.getElementById('theme-detail-modal').classList.add('hidden');
+    };
+    document.getElementById('theme-search').oninput = renderThemeList;
+    document.getElementById('theme-fav-toggle').onclick = function() {
+      showFavOnly = !showFavOnly;
+      this.textContent = showFavOnly ? '显示全部' : '只看收藏';
+      renderThemeList();
+    };
+    loadThemes();
+  </script>
+</body>
+</html> 

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prompt编辑器 - 智能代码辅助设计平台</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css">
+</head>
+<body class="bento-bg min-h-screen">
+  <nav class="flex items-center gap-4 px-8 py-4 bg-white shadow-sm sticky top-0 z-50">
+    <a href="index.html" class="text-blue-500 hover:underline flex items-center"><i class="fas fa-arrow-left mr-2"></i>返回首页</a>
+    <span class="text-xl font-bold ml-4">Prompt编辑器</span>
+  </nav>
+  <main class="max-w-3xl mx-auto mt-8 px-4">
+    <h2 class="text-2xl font-bold mb-6 text-blue-600">可视化Prompt编辑</h2>
+    <textarea id="prompt-input" class="w-full border rounded-lg p-3 mb-4" rows="6" placeholder="请输入你的Prompt..."></textarea>
+    <div class="flex gap-4 mb-4">
+      <button id="beautify-prompt" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">一键美化</button>
+      <button id="save-prompt" class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400">保存历史</button>
+    </div>
+    <div id="prompt-history" class="bg-gray-50 rounded p-4 min-h-[60px] text-gray-600">暂无历史记录</div>
+  </main>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>
+    // 简单美化和历史功能演示
+    const input = document.getElementById('prompt-input');
+    const beautifyBtn = document.getElementById('beautify-prompt');
+    const saveBtn = document.getElementById('save-prompt');
+    const history = document.getElementById('prompt-history');
+    let promptHistory = JSON.parse(localStorage.getItem('promptHistory')||'[]');
+    function renderHistory() {
+      if (promptHistory.length === 0) {
+        history.innerHTML = '暂无历史记录';
+        return;
+      }
+      history.innerHTML = promptHistory.map((p,i) => `<div class='mb-2 cursor-pointer hover:bg-blue-50 p-2 rounded' data-idx='${i}'><pre><code class='language-txt'>${p.replace(/</g,'&lt;')}</code></pre></div>`).join('');
+      history.querySelectorAll('div[data-idx]').forEach(div => {
+        div.onclick = function() {
+          input.value = promptHistory[div.dataset.idx];
+        };
+      });
+      history.querySelectorAll('pre code').forEach(block => { hljs.highlightElement(block); });
+    }
+    beautifyBtn.onclick = function() {
+      if (input.value.trim()) {
+        input.value = '【美化后】' + input.value.trim();
+      }
+    };
+    saveBtn.onclick = function() {
+      if (input.value.trim()) {
+        promptHistory.unshift(input.value.trim());
+        localStorage.setItem('promptHistory',JSON.stringify(promptHistory));
+        renderHistory();
+      }
+    };
+    renderHistory();
+  </script>
+</body>
+</html> 

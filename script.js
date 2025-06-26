@@ -329,43 +329,50 @@ const modalIntroData = {
     title: '主题库',
     icon: '<i class="fas fa-palette"></i>',
     desc: '浏览、筛选、收藏多种UI主题，查看风格预览、设计灵感、典型配色与组件案例。支持主题详情弹窗、标签管理。',
-    btn: '进入主题库'
+    btn: '进入主题库',
+    url: 'theme.html'
   },
   market: {
     title: '组件市场',
     icon: '<i class="fas fa-th-large"></i>',
     desc: '内置丰富UI组件模板库，支持浏览、搜索、筛选、预览、一键插入、拖拽排序。',
-    btn: '浏览组件市场'
+    btn: '浏览组件市场',
+    url: 'market.html'
   },
   prompt: {
     title: 'Prompt编辑器',
     icon: '<i class="fas fa-magic"></i>',
     desc: '可视化编辑Prompt，支持自动补全、风格建议、语法高亮、历史版本回溯与一键美化。',
-    btn: '体验Prompt编辑器'
+    btn: '体验Prompt编辑器',
+    url: 'prompt.html'
   },
   preview: {
     title: '实时预览',
     icon: '<i class="fas fa-desktop"></i>',
     desc: '支持桌面/移动端实时切换预览，导出多种格式（HTML/CSS/JS/图片/代码片段）。',
-    btn: '进入实时预览'
+    btn: '进入实时预览',
+    url: 'preview.html'
   },
   motion: {
     title: '动效生成',
     icon: '<i class="fas fa-wave-square"></i>',
     desc: '内置动效库，支持为组件添加悬停、点击、进场等动效，生成对应CSS/JS代码。',
-    btn: '体验动效生成'
+    btn: '体验动效生成',
+    url: 'motion.html'
   },
   team: {
     title: '团队协作',
     icon: '<i class="fas fa-users-cog"></i>',
     desc: '支持团队空间，成员可共享主题、组件、Prompt，AI协作建议，评论、@成员、任务分配等功能。',
-    btn: '进入团队空间'
+    btn: '进入团队空间',
+    url: 'team.html'
   },
   growth: {
     title: '成长体系',
     icon: '<i class="fas fa-seedling"></i>',
     desc: '用户主页，记录生成历史、收藏、成就、积分等，积分可兑换主题/组件/AI算力等。',
-    btn: '查看成长体系'
+    btn: '查看成长体系',
+    url: 'growth.html'
   }
 };
 
@@ -377,10 +384,15 @@ function showIntroModal(key) {
       <div class='text-4xl mb-4 text-blue-500'>${data.icon}</div>
       <div class='text-2xl font-bold mb-2'>${data.title}</div>
       <div class='text-lg text-gray-700 mb-6'>${data.desc}</div>
-      <button class='px-6 py-2 bg-blue-500 text-white rounded-xl text-lg font-semibold hover:bg-blue-600 transition'>${data.btn}</button>
+      <button id='modal-jump-btn' class='px-6 py-2 bg-blue-500 text-white rounded-xl text-lg font-semibold hover:bg-blue-600 transition'>${data.btn}</button>
     </div>
   `;
   modalMask.classList.remove('hidden');
+  // 跳转按钮逻辑
+  const jumpBtn = document.getElementById('modal-jump-btn');
+  if (jumpBtn && data.url) {
+    jumpBtn.onclick = () => { window.location.href = data.url; };
+  }
 }
 
 // 绑定导航栏点击
