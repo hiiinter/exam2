@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
   <script src="https://unpkg.com/framer-motion/dist/framer-motion.umd.js"></script>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="skeleton.css">
   <style>body{background:#fff;}</style>
 </head>
 <body>
@@ -28,7 +29,11 @@
   <section class="flex flex-col items-center justify-center text-center py-12" data-framer-motion>
     <div class="bento-big bento-highlight mb-4 zh">让创意显化为Prompt</div>
     <div class="bento-en mb-6 en">Empower your ideas. Generate beautiful UI code with AI.</div>
-    <img class="banner-img mb-6" src="https://i.ibb.co/xtN61cRf/Comfy-UI-Output-4-1.png" style="width:340px;max-width:90vw;border-radius:1.5rem;box-shadow:0 4px 32px #b6d4fa;">
+    <img class="banner-img mb-6 skeleton-img" 
+         src="https://i.ibb.co/xtN61cRf/Comfy-UI-Output-4-1.png" 
+         loading="lazy" 
+         style="width:340px;max-width:90vw;border-radius:1.5rem;box-shadow:0 4px 32px #b6d4fa;"
+         alt="平台主视觉">
     <button class="bento-btn banner-btn" onclick="window.location.href='shop.html'">立即体验</button>
   </section>
   <!-- Bento Grid区块：核心卖点 -->

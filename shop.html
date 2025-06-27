@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
   <script src="https://unpkg.com/framer-motion/dist/framer-motion.umd.js"></script>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="skeleton.css">
   <style>body{background:#fff;}</style>
 </head>
 <body>
@@ -37,7 +38,7 @@
       <div class="liquidGlass-effect"></div><div class="liquidGlass-tint"></div><div class="liquidGlass-shine"></div>
       <div class="liquidGlass-text flex flex-col gap-4 p-8">
         <button id="close-modal-btn" class="absolute top-4 right-4 text-2xl text-gray-400 hover:text-blue-500"><i class="fas fa-times"></i></button>
-        <img id="modal-img" class="rounded-xl mb-4 w-full h-48 object-cover" src="" alt="Prompt图片" style="background:#f6f8fa;">
+        <img id="modal-img" class="rounded-xl mb-4 w-full h-48 object-cover skeleton-img" src="" alt="Prompt图片" style="background:#f6f8fa;" loading="lazy">
         <div class="bento-big zh" id="modal-title"></div>
         <div class="bento-en en" id="modal-en"></div>
         <div class="text-gray-600 mb-2" id="modal-desc"></div>
@@ -89,7 +90,7 @@
         <div class="liquidGlass-wrapper bento-card group" data-framer-motion data-id="${p.id}" style="animation-delay:${i*0.05}s;">
           <div class="liquidGlass-effect"></div><div class="liquidGlass-tint"></div><div class="liquidGlass-shine"></div>
           <div class="liquidGlass-text flex flex-col gap-2">
-            <img src="${p.imgUrl}" class="rounded-xl mb-2 w-full h-32 object-cover" alt="${p.name}" style="background:#f6f8fa;">
+            <img src="${p.imgUrl}" class="rounded-xl mb-2 w-full h-32 object-cover skeleton-img" alt="${p.name}" style="background:#f6f8fa;" loading="lazy">
             <span class="bento-num">${(i+1).toString().padStart(2,'0')}</span>
             <span class="bento-big zh">${p.name}</span>
             <span class="bento-en en">${p.category}</span>
@@ -140,6 +141,7 @@
     // 弹窗详情
     function showModal(item){
       document.getElementById('modal-img').src = item.imgUrl;
+      document.getElementById('modal-img').classList.add('skeleton-img');
       document.getElementById('modal-title').textContent = item.name;
       document.getElementById('modal-en').textContent = item.category;
       document.getElementById('modal-desc').textContent = item.desc;
