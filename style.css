@@ -1,552 +1,220 @@
 /* 1. Google Fonts 导入 */
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Orbitron:wght@500;700&family=Press+Start+2P&family=Bungee&family=Roboto+Condensed:wght@700&family=Teko:wght@600&family=Quicksand:wght@700&family=Nunito:wght@700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Noto+Sans+SC:wght@700&display=swap');
 
-/* 2. CSS 变量定义 */
+/* 2. CSS 变量定义（Bento Grid + 天蓝高亮 + 渐变） */
 :root {
-  /* 日系核心色板 */
-  --color-background: #F5F5DC; /* 和纸米色 - Washi Beige */
-  --color-text: #333333;       /* 墨色 - Sumi Ink */
-  --color-primary: #8B4513;    /* 木色 - Wood Brown */
-  --color-accent: #C0392B;     /* 印章红 - Hanko Red */
-  --color-border: #DDDDDD;     /* 细线灰 - Light Gray */
-  /* 颜色变量（中性默认） */
-  --primary-color: #4a90e2;
-  --accent-color: #50e3c2;
-  --bg-color: #f5f5f5;
-  --card-bg: #fff;
-  --text-color: #222;
-  --border-radius: 1rem;
-  --box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  --font-main: 'Lato', 'Segoe UI', Arial, sans-serif;
-  --font-title: 'Lato', 'Segoe UI', Arial, sans-serif;
-
-  /* 新增：显化应用主题变量 */
-  --manifest-glow-primary: #a77eff;
-  --manifest-glow-secondary: #f48eff;
-  --manifest-bg-dark: #0d0b1a;
-  --manifest-glass-bg: rgba(26, 22, 54, 0.4);
-  --manifest-glass-border: rgba(255, 255, 255, 0.15);
+  --bento-bg: #fff;
+  --bento-highlight: #ADD8E6;
+  --bento-highlight-gradient: linear-gradient(90deg, #ADD8E6 0%, #fff 100%);
+  --bento-text: #222;
+  --bento-en: #60a5fa;
+  --bento-border: #e0e7ef;
+  --bento-radius: 2rem;
+  --bento-shadow: 0 6px 32px 0 #ADD8E622, 0 0 20px #ADD8E611;
+  --bento-glass: rgba(255,255,255,0.7);
+  --bento-glass-blur: blur(8px);
+  --bento-big-font: 'Inter', 'Noto Sans SC', Arial, sans-serif;
+  --bento-en-font: 'Inter', Arial, sans-serif;
 }
 
-/* CSS Reset */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
 html, body {
-  height: 100%;
-  font-family: 'Noto Sans JP', Arial, sans-serif;
-  background: var(--color-background);
-  color: var(--color-text);
-  transition: background 0.3s, color 0.3s;
+  background: var(--bento-bg);
+  color: var(--bento-text);
+  font-family: var(--bento-big-font);
   min-height: 100vh;
-  line-height: 1.7;
   font-size: 16px;
+  line-height: 1.7;
+  transition: background 0.3s, color 0.3s;
 }
 
-/* 3. 通用样式应用 */
-button {
-  font-family: inherit;
-  background: #fff;
-  color: var(--color-primary);
-  border: 1px solid var(--color-border);
-  border-radius: 8px;
-  padding: 0.5em 1.5em;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background 0.2s, color 0.2s, border-color 0.2s;
-  box-shadow: none;
-  outline: none;
-}
-button:hover, button:focus {
-  background: var(--color-primary);
-  color: #fff;
-  border-color: var(--color-primary);
-}
-
-/* 基础布局样式 */
-#theme-selection-view {
-  padding: 2rem 1rem;
-  max-width: 900px;
-  margin: 0 auto;
-}
-#theme-grid {
+/* Bento Grid 主体布局 */
+.bento-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 2rem;
-  margin-top: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 2.5rem;
+  margin-top: 2.5rem;
 }
-.theme-card {
-  background: #fff;
-  border: 1px solid var(--color-border);
-  border-radius: 14px;
-  box-shadow: 0 2px 12px rgba(51,51,51,0.06);
-  padding: 1.5rem 1rem;
-  text-align: center;
-  transition: box-shadow 0.2s, border-color 0.2s;
-}
-.theme-card:hover {
-  box-shadow: 0 4px 24px rgba(192,57,43,0.10);
-  border-color: var(--color-accent);
-}
-.theme-preview {
-  width: 100%;
-  height: 120px;
-  object-fit: cover;
-  border-radius: 0.5rem;
-  margin-bottom: 1rem;
-  background: #2222;
-}
-.theme-title {
-  font-size: 1.2rem;
-  font-weight: bold;
-  font-family: var(--font-title);
-}
-
-/* 赛博朋克主题下的光晕按钮和卡片 */
-.theme-cyberpunk .theme-card,
-.theme-cyberpunk button {
-  box-shadow: 0 0 12px 2px var(--primary-color), 0 0 24px 4px var(--accent-color);
-  border: 2px solid var(--accent-color);
-  background: var(--card-bg);
-  color: var(--text-color);
-}
-.theme-cyberpunk button:hover {
-  background: var(--accent-color);
-  color: #fff;
-}
-
-/* 极简主义主题下的柔和阴影 */
-.theme-minimalist .theme-card {
-  box-shadow: 0 2px 12px rgba(126,217,87,0.08);
-  border: 1px solid #e0e0e0;
-  background: var(--card-bg);
-  color: var(--text-color);
-}
-.theme-minimalist button {
-  background: var(--accent-color);
-  color: #fff;
-  box-shadow: 0 2px 8px rgba(126,217,87,0.10);
-}
-.theme-minimalist button:hover {
-  background: #b6f2b6;
-  color: var(--primary-color);
-}
-
-/* generator-view 隐藏 */
-#generator-view {
-  display: none;
-}
-
-/* 分栏布局 */
-.generator-container {
-  display: flex;
-  max-width: 1100px;
-  margin: 2rem auto;
-  background: var(--card-bg);
-  border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow);
-  overflow: hidden;
-}
-.generator-left {
-  flex: 0 0 320px;
-  background: #fafafa;
-  padding: 2rem 1.5rem;
-  border-right: 1px solid #eee;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-.generator-right {
-  flex: 1;
-  padding: 2rem 2.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
-#component-desc {
-  width: 100%;
-  min-height: 80px;
-  resize: vertical;
-  padding: 0.75rem;
-  border-radius: 0.5rem;
-  border: 1px solid #ccc;
-  font-size: 1rem;
-  font-family: var(--font-main);
-}
-#quick-components {
-  display: flex;
-  gap: 0.5rem;
-}
-.quick-btn {
-  padding: 0.5rem 1.2rem;
-  border: none;
-  border-radius: 0.5rem;
-  background: var(--accent-color);
-  color: #fff;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: background 0.2s;
-  font-family: var(--font-main);
-}
-.quick-btn:hover {
-  background: var(--primary-color);
-}
-#preview-area, #prompt-area, #code-area {
-  background: #f8f8f8;
-  border-radius: 0.75rem;
-  padding: 1rem 1.5rem;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
-}
-#generated-prompt {
-  width: 100%;
-  min-height: 60px;
-  margin-bottom: 0.5rem;
-  border-radius: 0.5rem;
-  border: 1px solid #ccc;
-  padding: 0.5rem;
-  font-size: 1rem;
-  resize: vertical;
-  font-family: var(--font-main);
-}
-#generated-code {
-  background: #222;
-  color: #fff;
-  padding: 1rem;
-  border-radius: 0.5rem;
-  font-family: 'Fira Mono', 'Consolas', monospace;
-  font-size: 0.98rem;
-  overflow-x: auto;
-}
-button#copy-prompt, button#copy-code, #back-to-theme {
-  margin-top: 0.5rem;
-  padding: 0.5rem 1.2rem;
-  border: none;
-  border-radius: 0.5rem;
-  background: var(--primary-color);
-  color: #fff;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-button#copy-prompt:hover, button#copy-code:hover, #back-to-theme:hover {
-  background: var(--accent-color);
-}
-
-/* 主题风格变量与空 class */
-.theme-cyberpunk {
-  --primary-color: #00fff7;
-  --accent-color: #ff00ea;
-  --bg-color: #18182f;
-  --card-bg: #23234d;
-  --text-color: #fff;
-  --border-radius: 1.2rem;
-  --box-shadow: 0 0 12px 2px var(--primary-color), 0 0 24px 4px var(--accent-color);
-  --font-main: 'Orbitron', 'Lato', Arial, sans-serif;
-  --font-title: 'Orbitron', 'Lato', Arial, sans-serif;
-}
-.theme-minimalist {
-  --primary-color: #222;
-  --accent-color: #7ed957;
-  --bg-color: #fff;
-  --card-bg: #f8fdf7;
-  --text-color: #222;
-  --border-radius: 1rem;
-  --box-shadow: 0 2px 12px rgba(126,217,87,0.08);
-  --font-main: 'Lato', Arial, sans-serif;
-  --font-title: 'Lato', Arial, sans-serif;
-}
-
-/* 千禧复古甜心 Y2K */
-.theme-y2k {
-  --primary-color: #fdf4f9;
-  --secondary-color: rgba(255,255,255,0.6);
-  --accent-color: #ff4ff1;
-  --text-color: #0000ff;
-  --bg-color: #fdf4f9;
-  --card-bg: #fff;
-  --border-radius: 1.5rem;
-  --box-shadow: 0 2px 16px 2px #ffb3f7, 0 1px 8px 0 #fff6;
-  --font-main: 'Bungee', 'Press Start 2P', 'Lato', Arial, sans-serif;
-  --font-title: 'Bungee', 'Press Start 2P', 'Lato', Arial, sans-serif;
-}
-
-/* 都市机能风 Techwear */
-.theme-techwear {
-  --primary-color: #1a1a1a;
-  --secondary-color: #2b2b2b;
-  --accent-color: #ff6b00;
-  --text-color: #e0e0e0;
-  --bg-color: #1a1a1a;
-  --card-bg: #2b2b2b;
-  --border-radius: 2px;
-  --box-shadow: 0 2px 8px rgba(255,107,0,0.10);
-  --font-main: 'Teko', 'Roboto Condensed', Arial, sans-serif;
-  --font-title: 'Teko', 'Roboto Condensed', Arial, sans-serif;
-}
-
-/* 奶油慕斯柔和 Creamy */
-.theme-creamy {
-  --primary-color: #fdf6e9;
-  --secondary-color: #ffffff;
-  --accent-color: #a68572;
-  --text-color: #6b4f4f;
-  --bg-color: #fdf6e9;
-  --card-bg: #fff;
-  --border-radius: 2.5rem;
-  --box-shadow: 0 8px 32px 0 #f3e6d6cc, 0 1.5px 8px 0 #fff8;
-  --font-main: 'Quicksand', 'Nunito', Arial, sans-serif;
-  --font-title: 'Quicksand', 'Nunito', Arial, sans-serif;
-}
-
-/* 千禧复古甜心 Y2K 专属样式 */
-.theme-y2k .theme-card,
-.theme-y2k button {
-  box-shadow: 0 2px 16px 2px #ffb3f7, 0 1px 8px 0 #fff6;
-  border-radius: 1.5rem;
-  border: 2px solid var(--accent-color);
-  background: var(--card-bg);
-  color: var(--text-color);
-  font-family: var(--font-main);
-  letter-spacing: 1px;
-}
-.theme-y2k .theme-card:hover,
-.theme-y2k button:hover {
-  box-shadow: 0 4px 32px 4px #ff4ff1cc, 0 2px 12px 0 #fff8;
-  background: var(--secondary-color);
-}
-
-/* 都市机能风 Techwear 专属样式 */
-.theme-techwear .theme-card,
-.theme-techwear button {
-  border-radius: 2px;
-  border: 2px solid var(--accent-color);
-  background: var(--card-bg);
-  color: var(--text-color);
-  font-family: var(--font-main);
-  box-shadow: 0 2px 8px rgba(255,107,0,0.10);
-  text-transform: uppercase;
-  letter-spacing: 2px;
-}
-.theme-techwear .theme-card:hover,
-.theme-techwear button:hover {
-  background: var(--secondary-color);
-  border-color: var(--accent-color);
-  box-shadow: 0 4px 16px 2px #ff6b00cc;
-}
-
-/* 奶油慕斯柔和 Creamy 专属样式 */
-.theme-creamy .theme-card,
-.theme-creamy button {
-  border-radius: 2.5rem;
-  background: var(--card-bg);
-  color: var(--text-color);
-  font-family: var(--font-main);
-  box-shadow: 0 8px 32px 0 #f3e6d6cc, 0 1.5px 8px 0 #fff8;
-  border: none;
-}
-.theme-creamy .theme-card:hover,
-.theme-creamy button:hover {
-  background: var(--secondary-color);
-  box-shadow: 0 12px 48px 0 #f3e6d6ee, 0 2px 12px 0 #fff8;
-}
-
-/* 输入框样式 */
-textarea, input[type="text"] {
-  font-family: inherit;
-  font-size: 1rem;
-  background: #fff;
-  color: var(--color-text);
-  border: 1px solid var(--color-border);
-  border-radius: 8px;
-  padding: 0.75em 1em;
-  transition: border-color 0.2s, box-shadow 0.2s;
-  outline: none;
-  resize: vertical;
-}
-textarea:focus, input[type="text"]:focus {
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 2px #8b451320;
-}
-
-/* 链接样式 */
-a {
-  color: var(--color-primary);
-  text-decoration: none;
-  transition: color 0.2s;
-}
-a:hover {
-  color: var(--color-accent);
-}
-
-/* ========== 应用主容器与页头页脚样式 ========== */
-.app-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 40px 20px;
-}
-
-header {
-  padding: 20px 0;
-  text-align: center;
-  border-bottom: 1px solid var(--color-border);
-}
-header h1 {
-  color: var(--color-primary);
-  font-size: 2.1rem;
-  font-weight: 700;
-  letter-spacing: 2px;
-}
-
-footer {
-  padding: 20px 0 10px 0;
-  text-align: center;
-  border-top: 1px solid var(--color-border);
-  color: #888;
-  font-size: 0.95em;
-  background: transparent;
-}
-
-/* 返回按钮样式 */
-.back-button {
-  background: none;
-  border: none;
-  color: var(--color-primary);
-  font-size: 1rem;
-  padding: 0.2em 0.5em 0.2em 0;
-  margin-bottom: 1.2em;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 0.3em;
-  transition: color 0.2s, background 0.2s;
-  outline: none;
-  box-shadow: none;
-}
-.back-button:hover, .back-button:focus {
-  color: var(--color-accent);
-  background: #f5f5dc55;
-  border-radius: 6px;
-}
-
-/* 视图容器淡入淡出动画 */
-#theme-selection-view,
-#generator-view {
-  transition: opacity 0.4s ease, transform 0.4s ease;
-}
-
-.hidden {
-  opacity: 0;
-  transform: translateY(10px);
-  pointer-events: none;
-}
-
-/* 显化应用主题专属样式 */
-.theme-manifest.theme-card,
-.theme-manifest .generator-container,
-.theme-manifest #component-preview > div {
-  background: var(--manifest-glass-bg);
-  backdrop-filter: blur(12px) saturate(140%);
-  -webkit-backdrop-filter: blur(12px) saturate(140%);
-  border: 1px solid var(--manifest-glass-border);
-  color: #fff;
-}
-
-.theme-manifest.theme-card {
-  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-}
-
-.theme-manifest #component-preview button {
-  background: var(--manifest-glass-bg);
-  color: #fff;
-  border-color: var(--manifest-glass-border);
-  border-radius: 999px;
-  box-shadow: 0 0 15px var(--manifest-glow-primary);
-}
-.theme-manifest #component-preview button:hover {
-  background: linear-gradient(45deg, var(--manifest-glow-primary), var(--manifest-glow-secondary));
-  border-color: transparent;
-}
-
-/* 弹窗遮罩和内容样式 */
-#main-modal-mask {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-}
-#main-modal {
-  background: #fff;
-  border-radius: 2rem;
-  box-shadow: 0 8px 40px 0 rgba(0,0,0,0.18);
-  max-width: 700px;
-  width: 96vw;
-  min-height: 420px;
+.bento-card {
+  background: var(--bento-glass);
+  border-radius: var(--bento-radius);
+  box-shadow: var(--bento-shadow);
+  border: 1.5px solid var(--bento-border);
+  padding: 2.2rem 2rem 2rem 2rem;
   position: relative;
-  padding: 0;
   overflow: hidden;
-  animation: modalIn 0.4s cubic-bezier(.4,0,.2,1);
-}
-@keyframes modalIn {
-  from { opacity: 0; transform: translateY(40px) scale(0.98); }
-  to { opacity: 1; transform: none; }
-}
-#close-modal-btn {
-  background: none;
-  border: none;
-  font-size: 2rem;
-  color: #888;
+  transition: box-shadow 0.3s, transform 0.3s, border-radius 0.3s;
   cursor: pointer;
-  transition: color 0.2s;
-  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
-#close-modal-btn:hover {
-  color: #2563eb;
+.bento-card:hover {
+  box-shadow: 0 12px 48px 0 #ADD8E644, 0 0 32px #60a5fa33;
+  border-radius: 2.5rem;
+  transform: translateY(-4px) scale(1.03);
 }
 
-/* 顶部导航栏样式 */
+/* 超大数字/字体强调 */
+.bento-num {
+  font-size: 4.2rem;
+  font-weight: 900;
+  background: var(--bento-highlight-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.2em;
+  font-family: var(--bento-big-font);
+}
+.bento-big {
+  font-size: 2.8rem;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+  font-family: var(--bento-big-font);
+}
+.bento-en {
+  font-size: 1.1rem;
+  color: var(--bento-en);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  font-family: var(--bento-en-font);
+}
+.bento-highlight {
+  color: var(--bento-highlight);
+  font-weight: 900;
+  background: var(--bento-highlight-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Bento Glass 卡片科技感渐变 */
+.liquidGlass-wrapper {
+  position: relative;
+  display: flex;
+  overflow: hidden;
+  padding: 0.6rem;
+  border-radius: var(--bento-radius);
+  cursor: pointer;
+  box-shadow: var(--bento-shadow);
+  background: var(--bento-glass);
+  backdrop-filter: var(--bento-glass-blur);
+  transition: all 0.4s cubic-bezier(0.175,0.885,0.32,2.2);
+}
+.liquidGlass-wrapper:hover {
+  padding: 0.8rem;
+  border-radius: 2.5rem;
+}
+.liquidGlass-effect {
+  position: absolute; z-index: 0; inset: 0;
+  backdrop-filter: blur(3px);
+}
+.liquidGlass-tint {
+  position: absolute; z-index: 1; inset: 0;
+  background: linear-gradient(120deg, #ADD8E6 0%, #fff 100%);
+  opacity: 0.18;
+}
+.liquidGlass-shine {
+  position: absolute; z-index: 2; inset: 0;
+  box-shadow: inset 2px 2px 1px 0 #fff8, inset -1px -1px 1px 1px #fff8;
+}
+.liquidGlass-text {
+  position: relative; z-index: 3;
+  color: var(--bento-text);
+  transition: transform 0.4s cubic-bezier(0.175,0.885,0.32,2.2);
+}
+.liquidGlass-wrapper:hover .liquidGlass-text {
+  transform: scale(0.97);
+}
+
+/* 中英文混排样式 */
+.zh {
+  font-family: 'Noto Sans SC', 'Inter', Arial, sans-serif;
+  font-weight: 900;
+  font-size: 2.1rem;
+  letter-spacing: 0.01em;
+}
+.en {
+  font-family: var(--bento-en-font);
+  font-size: 1.1rem;
+  color: var(--bento-en);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+/* 简洁勾线图形化（SVG线条） */
+.bento-line-svg {
+  width: 100%;
+  height: 80px;
+  display: block;
+  margin: 1.2em 0 0.5em 0;
+}
+.bento-line-svg path {
+  stroke: #ADD8E6;
+  stroke-width: 3;
+  fill: none;
+  opacity: 0.7;
+}
+
+/* 按钮统一风格 */
+.bento-btn {
+  background: var(--bento-highlight-gradient);
+  color: #222;
+  border: none;
+  border-radius: 1.2rem;
+  padding: 0.7em 2.2em;
+  font-size: 1.2rem;
+  font-weight: 700;
+  box-shadow: 0 2px 8px #b6d4fa;
+  cursor: pointer;
+  transition: background .2s, transform .2s;
+}
+.bento-btn:hover {
+  background: linear-gradient(90deg,#60a5fa,#ADD8E6 60%,#fff);
+  color: #222;
+  transform: scale(1.06);
+}
+
+/* 顶部导航栏 */
 nav {
-  background: #fff;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  background: var(--bento-glass);
+  box-shadow: 0 2px 8px #ADD8E622;
   position: sticky;
   top: 0;
   z-index: 100;
+  border-radius: 0 0 2rem 2rem;
+  backdrop-filter: var(--bento-glass-blur);
 }
-nav ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  gap: 2rem;
+nav a {
+  color: var(--bento-en);
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-right: 1.2em;
+  transition: color 0.2s;
 }
-nav ul li {
-  display: inline-block;
-}
-nav ul li a.nav-link {
-  color: #2563eb;
-  text-decoration: none;
-  padding: 0.2em 0.8em;
-  border-radius: 8px;
-  transition: background 0.2s, color 0.2s;
-}
-nav ul li a.nav-link:hover {
-  background: #e0e7ff;
-  color: #1e40af;
+nav a:hover {
+  color: var(--bento-highlight);
 }
 
-/* 弹窗介绍内容样式 */
-#main-modal .text-4xl {
-  font-size: 2.2rem;
+/* Framer Motion 动效（基础fade-in） */
+[data-framer-motion] {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.7s cubic-bezier(.4,0,.2,1), transform 0.7s cubic-bezier(.4,0,.2,1);
 }
-#main-modal .text-2xl {
-  font-size: 1.4rem;
+[data-framer-motion].in {
+  opacity: 1;
+  transform: none;
 }
-#main-modal .text-lg {
-  font-size: 1.1rem;
+
+/* 响应式优化 */
+@media (max-width: 900px) {
+  .bento-big { font-size: 1.5rem; }
+  .bento-num { font-size: 2rem; }
+  .bento-grid { gap: 1.2rem; }
 }
-#main-modal button {
-  margin-top: 1.5rem;
+@media (max-width: 600px) {
+  .bento-grid { grid-template-columns: 1fr; }
+  .bento-card { min-height: 120px; }
+  .bento-big { font-size: 1.1rem; }
 } 

@@ -1,0 +1,20 @@
+<!-- 登录/注册弹窗模板，仅弹窗内容，无<body>等结构 -->
+<div id="login-modal" class="liquidGlass-wrapper bento-card relative max-w-xs w-full p-0 animate__animated animate__fadeIn" style="animation-duration:0.35s;">
+  <div class="liquidGlass-effect"></div><div class="liquidGlass-tint"></div><div class="liquidGlass-shine"></div>
+  <div class="liquidGlass-text flex flex-col gap-4 p-8" id="login-content">
+    <button id="close-login-btn" class="absolute top-4 right-4 text-2xl text-gray-400 hover:text-blue-500"><i class="fas fa-times"></i></button>
+    <div class="bento-big zh mb-2" id="login-title">用户登录</div>
+    <input id="login-username" class="rounded-xl px-4 py-2 bg-white/70 text-gray-700 placeholder:text-gray-400" placeholder="用户名" maxlength="16" autocomplete="username">
+    <input id="login-password" type="password" class="rounded-xl px-4 py-2 bg-white/70 text-gray-700 placeholder:text-gray-400" placeholder="密码" maxlength="20" autocomplete="current-password">
+    <button id="login-submit" class="bento-btn mt-2">登录</button>
+    <div class="text-sm text-gray-500 mt-2">没有账号？<a href="#" id="to-register" class="text-blue-500 hover:underline">注册</a></div>
+  </div>
+  <div class="liquidGlass-text flex flex-col gap-4 p-8 hidden" id="register-content">
+    <button id="close-register-btn" class="absolute top-4 right-4 text-2xl text-gray-400 hover:text-blue-500"><i class="fas fa-times"></i></button>
+    <div class="bento-big zh mb-2">用户注册</div>
+    <input id="register-username" class="rounded-xl px-4 py-2 bg-white/70 text-gray-700 placeholder:text-gray-400" placeholder="用户名" maxlength="16" autocomplete="username">
+    <input id="register-password" type="password" class="rounded-xl px-4 py-2 bg-white/70 text-gray-700 placeholder:text-gray-400" placeholder="密码" maxlength="20" autocomplete="new-password">
+    <button id="register-submit" class="bento-btn mt-2">注册</button>
+    <div class="text-sm text-gray-500 mt-2">已有账号？<a href="#" id="to-login" class="text-blue-500 hover:underline">登录</a></div>
+  </div>
+</div> 

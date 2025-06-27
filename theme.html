@@ -4,94 +4,154 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>主题库 - 智能代码辅助设计平台</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Noto+Sans+SC:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+  <script src="https://unpkg.com/framer-motion/dist/framer-motion.umd.js"></script>
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <style>body{background:#fff;}</style>
 </head>
-<body class="bento-bg min-h-screen">
-  <nav class="flex items-center gap-4 px-8 py-4 bg-white shadow-sm sticky top-0 z-50">
-    <a href="index.html" class="text-blue-500 hover:underline flex items-center"><i class="fas fa-arrow-left mr-2"></i>返回首页</a>
-    <span class="text-xl font-bold ml-4">主题库</span>
+<body>
+  <nav class="liquidGlass-wrapper items-center justify-between px-8 py-4 mb-6" style="backdrop-filter:blur(8px);">
+    <div class="liquidGlass-text flex items-center gap-4">
+      <span class="text-2xl font-black gradient-text">主题库</span>
+      <a href="landing.html" class="bento-en hover:underline">首页</a>
+      <a href="shop.html" class="bento-en hover:underline">Prompt商城</a>
+      <a href="market.html" class="bento-en hover:underline">组件市场</a>
+    </div>
+    <div class="liquidGlass-text flex items-center gap-4">
+      <input class="rounded-xl px-4 py-2 bg-white/30 text-gray-700 placeholder:text-gray-400" style="backdrop-filter:blur(2px);" placeholder="搜索主题...">
+      <button class="bento-btn">登录/注册</button>
+    </div>
   </nav>
-  <main class="max-w-5xl mx-auto mt-8 px-4">
-    <h2 class="text-2xl font-bold mb-6 text-blue-600">浏览主题</h2>
-    <div class="flex gap-4 mb-6">
-      <input id="theme-search" type="text" class="border rounded px-3 py-2 w-64" placeholder="搜索主题名称...">
-      <button id="theme-fav-toggle" class="px-4 py-2 bg-yellow-400 text-white rounded hover:bg-yellow-500">只看收藏</button>
-    </div>
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6" id="theme-list"></div>
-  </main>
-  <!-- 主题详情弹窗预留区 -->
-  <div id="theme-detail-modal" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
-    <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-8 relative animate__animated animate__fadeIn">
-      <button id="close-theme-detail" class="absolute top-4 right-4 text-2xl text-gray-400 hover:text-blue-500"><i class="fas fa-times"></i></button>
-      <div id="theme-detail-content"></div>
-    </div>
-  </div>
-  <script>
-    // 动态加载主题数据
-    let allThemes = [];
-    let showFavOnly = false;
-    let favThemes = JSON.parse(localStorage.getItem('favThemes')||'[]');
-    async function loadThemes() {
-      const res = await fetch('data/themes.json');
-      allThemes = await res.json();
-      renderThemeList();
-    }
-    function renderThemeList() {
-      const search = document.getElementById('theme-search').value.trim().toLowerCase();
-      const list = document.getElementById('theme-list');
-      let themes = allThemes.filter(t => t.name.includes(search) || t.key.includes(search));
-      if (showFavOnly) themes = themes.filter(t => favThemes.includes(t.key));
-      list.innerHTML = themes.map(t => `
-        <div class="theme-card p-6 rounded-xl shadow cursor-pointer hover:shadow-lg relative" data-theme="${t.key}">
-          <div class="theme-title text-lg font-bold mb-2">${t.name}</div>
-          <div class="text-xs text-gray-400 mb-2">${t.key}</div>
-          <div class="flex gap-1 mb-2">${t.colors.map(c=>`<span style='display:inline-block;width:18px;height:18px;border-radius:50%;background:${c}'></span>`).join('')}</div>
-          <div class="text-gray-600 mb-2">${t.desc}</div>
-          <button class="fav-btn absolute top-2 right-2 text-xl ${favThemes.includes(t.key)?'text-yellow-400':'text-gray-300'}" title="收藏"><i class="fas fa-star"></i></button>
+  <section class="max-w-7xl mx-auto">
+    <div class="bento-big bento-highlight mb-4 zh" data-framer-motion>主题库</div>
+    <div class="bento-en mb-8 en" data-framer-motion>多样UI风格主题，灵感无限</div>
+    <div class="bento-grid">
+      <!-- 主题卡片示例，实际应由JS动态渲染 -->
+      <div class="liquidGlass-wrapper bento-card" data-framer-motion>
+        <div class="liquidGlass-effect"></div><div class="liquidGlass-tint"></div><div class="liquidGlass-shine"></div>
+        <div class="liquidGlass-text flex flex-col gap-2">
+          <span class="bento-num">01</span>
+          <span class="bento-big zh">科技蓝玻璃</span>
+          <span class="bento-en en">Tech Blue Glass</span>
+          <span class="mt-2">Bento Grid+液体玻璃，天蓝高亮，适合科技类产品。</span>
+          <button class="bento-btn mt-4"><i class="fas fa-star mr-2"></i>收藏</button>
+          <svg class="bento-line-svg" viewBox="0 0 300 80"><path d="M10,70 Q80,10 150,40 T290,60"/></svg>
         </div>
-      `).join('');
-      // 绑定卡片点击
-      list.querySelectorAll('.theme-card').forEach(card => {
-        card.onclick = function(e) {
-          if (e.target.classList.contains('fav-btn') || e.target.closest('.fav-btn')) return;
-          const t = allThemes.find(x=>x.key===card.dataset.theme);
-          document.getElementById('theme-detail-modal').classList.remove('hidden');
-          document.getElementById('theme-detail-content').innerHTML = `
-            <div class='text-xl font-bold mb-2'>${t.name}</div>
-            <div class='mb-2 text-gray-500'>${t.key}</div>
-            <div class='mb-2'>主色：${t.colors.map(c=>`<span style='display:inline-block;width:18px;height:18px;border-radius:50%;background:${c}'></span>`).join('')}</div>
-            <div class='mb-2'>字体：${t.font}</div>
-            <div class='mb-2'>支持组件：${t.components.join('、')}</div>
-            <div class='mb-4'>${t.desc}</div>
-          `;
-        };
-      });
-      // 收藏按钮
-      list.querySelectorAll('.fav-btn').forEach((btn,i) => {
-        btn.onclick = function(e) {
-          e.stopPropagation();
-          const key = allThemes[i].key;
-          if (favThemes.includes(key)) {
-            favThemes = favThemes.filter(k=>k!==key);
-          } else {
-            favThemes.push(key);
-          }
-          localStorage.setItem('favThemes',JSON.stringify(favThemes));
-          renderThemeList();
-        };
+      </div>
+      <div class="liquidGlass-wrapper bento-card" data-framer-motion>
+        <div class="liquidGlass-effect"></div><div class="liquidGlass-tint"></div><div class="liquidGlass-shine"></div>
+        <div class="liquidGlass-text flex flex-col gap-2">
+          <span class="bento-num">02</span>
+          <span class="bento-big zh">极简白</span>
+          <span class="bento-en en">Minimalist White</span>
+          <span class="mt-2">极简白底，天蓝点缀，适合内容展示。</span>
+          <button class="bento-btn mt-4"><i class="fas fa-star mr-2"></i>收藏</button>
+          <svg class="bento-line-svg" viewBox="0 0 300 80"><path d="M10,40 Q80,70 150,20 T290,60"/></svg>
+        </div>
+      </div>
+      <!-- ...更多主题卡片... -->
+    </div>
+  </section>
+  <!-- 登录/注册弹窗容器 -->
+  <div id="login-mask" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden" tabindex="-1"></div>
+  <script>
+    // Framer Motion 滚动入场动效
+    function revealOnScroll() {
+      document.querySelectorAll('[data-framer-motion]').forEach(card => {
+        const rect = card.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 40) card.classList.add('in');
+        else card.classList.remove('in');
       });
     }
-    document.getElementById('close-theme-detail').onclick = function() {
-      document.getElementById('theme-detail-modal').classList.add('hidden');
-    };
-    document.getElementById('theme-search').oninput = renderThemeList;
-    document.getElementById('theme-fav-toggle').onclick = function() {
-      showFavOnly = !showFavOnly;
-      this.textContent = showFavOnly ? '显示全部' : '只看收藏';
-      renderThemeList();
-    };
-    loadThemes();
+    window.addEventListener('scroll', revealOnScroll);
+    window.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('[data-framer-motion]').forEach(card => card.classList.add('in'));
+      revealOnScroll();
+    });
+    // 登录/注册弹窗逻辑
+    let shopUser = localStorage.getItem('shopUser')||'';
+    function updateLoginBtn() {
+      document.querySelectorAll('.bento-btn').forEach(btn=>{
+        if (btn.textContent.includes('登录')||btn.textContent.includes('注册')||btn.textContent.includes('退出')||btn.textContent==='登录/注册') {
+          if (shopUser) {
+            btn.textContent = shopUser+' (退出)';
+            btn.onclick = function() {
+              shopUser = '';
+              localStorage.removeItem('shopUser');
+              updateLoginBtn();
+              showToast('已退出登录');
+            };
+          } else {
+            btn.textContent = '登录/注册';
+            btn.onclick = function() {
+              loadLoginModal(false);
+            };
+          }
+        }
+      });
+    }
+    updateLoginBtn();
+    // 动态加载login.html并弹窗
+    function loadLoginModal(showRegister){
+      fetch('login.html').then(r=>r.text()).then(html=>{
+        const mask = document.getElementById('login-mask');
+        mask.innerHTML = html;
+        mask.classList.remove('hidden');
+        const modal = document.getElementById('login-modal');
+        if(showRegister){
+          document.getElementById('login-content').classList.add('hidden');
+          document.getElementById('register-content').classList.remove('hidden');
+          setTimeout(()=>document.getElementById('register-username').focus(),10);
+        }else{
+          document.getElementById('login-content').classList.remove('hidden');
+          document.getElementById('register-content').classList.add('hidden');
+          setTimeout(()=>document.getElementById('login-username').focus(),10);
+        }
+        setTimeout(()=>modal.classList.add('in'),10);
+        // 事件绑定
+        document.getElementById('close-login-btn').onclick = closeLogin;
+        document.getElementById('close-register-btn').onclick = closeLogin;
+        mask.onclick = function(e){if(e.target===mask) closeLogin();};
+        document.addEventListener('keydown',escCloseLogin);
+        document.getElementById('to-register').onclick = function(e){e.preventDefault();loadLoginModal(true);};
+        document.getElementById('to-login').onclick = function(e){e.preventDefault();loadLoginModal(false);};
+        document.getElementById('login-submit').onclick = loginSubmit;
+        document.getElementById('register-submit').onclick = registerSubmit;
+      });
+    }
+    function escCloseLogin(e){if(e.key==='Escape') closeLogin();}
+    function closeLogin(){
+      const mask = document.getElementById('login-mask');
+      const modal = document.getElementById('login-modal');
+      if(modal) modal.classList.remove('in');
+      setTimeout(()=>{mask.classList.add('hidden');mask.innerHTML='';document.removeEventListener('keydown',escCloseLogin);},220);
+    }
+    function loginSubmit(){
+      const user = document.getElementById('login-username').value.trim();
+      const pwd = document.getElementById('login-password').value;
+      const users = JSON.parse(localStorage.getItem('users')||'{}');
+      if(!user||!pwd){ showToast('请输入用户名和密码'); return; }
+      if(!users[user]||users[user]!==pwd){ showToast('用户名或密码错误'); return; }
+      shopUser = user;
+      localStorage.setItem('shopUser',shopUser);
+      closeLogin();
+      updateLoginBtn();
+      showToast('登录成功');
+    }
+    function registerSubmit(){
+      const user = document.getElementById('register-username').value.trim();
+      const pwd = document.getElementById('register-password').value;
+      if(user.length<2){ showToast('用户名需2位以上'); return; }
+      if(pwd.length<4){ showToast('密码需4位以上'); return; }
+      let users = JSON.parse(localStorage.getItem('users')||'{}');
+      if(users[user]){ showToast('用户名已存在'); return; }
+      users[user]=pwd;
+      localStorage.setItem('users',JSON.stringify(users));
+      showToast('注册成功，请登录');
+      loadLoginModal(false);
+    }
   </script>
 </body>
 </html> 

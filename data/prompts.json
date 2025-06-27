@@ -1,0 +1,66 @@
+[
+  {
+    "id": "cyberpunk-btn",
+    "imgUrl": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80",
+    "name": "赛博朋克按钮",
+    "desc": "霓虹高光，未来感强烈的按钮风格",
+    "category": "赛博朋克",
+    "prompt": "请为我生成一个赛博朋克风格的按钮，深色背景，明亮霓虹高光，未来感强烈。"
+  },
+  {
+    "id": "minimalist-card",
+    "imgUrl": "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80",
+    "name": "极简卡片",
+    "desc": "明亮留白，干净线条的卡片风格",
+    "category": "极简主义",
+    "prompt": "请为我生成一个极简主义风格的卡片，明亮、留白、柔和绿色点缀，干净线条。"
+  },
+  {
+    "id": "y2k-form",
+    "imgUrl": "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80",
+    "name": "Y2K表单",
+    "desc": "复古甜心，潮流色彩的表单风格",
+    "category": "Y2K",
+    "prompt": "请为我生成一个千禧复古Y2K风格的表单，色彩丰富，带有潮流感。"
+  },
+  {
+    "id": "techwear-banner",
+    "imgUrl": "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80",
+    "name": "都市机能横幅",
+    "desc": "冷峻灰黑，橙色点缀，极具未来感的横幅",
+    "category": "都市机能",
+    "prompt": "请为我生成一个都市机能风格的横幅，灰黑主色，橙色点缀，极具未来感。"
+  },
+  {
+    "id": "creamy-avatar",
+    "imgUrl": "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80",
+    "name": "奶油慕斯头像",
+    "desc": "柔和奶油色，圆润可爱的头像组件",
+    "category": "奶油慕斯",
+    "prompt": "请为我生成一个奶油慕斯风格的头像组件，柔和色彩，圆润可爱。"
+  },
+  {
+    "id": "manifest-card",
+    "imgUrl": "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80",
+    "name": "显化应用卡片",
+    "desc": "液体玻璃质感，星空背景，梦幻卡片",
+    "category": "显化应用",
+    "prompt": "请为我生成一个显化应用风格的卡片，液体玻璃质感，星空背景，梦幻氛围。"
+  },
+  {
+    "id": "cyberpunk-form",
+    "imgUrl": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80",
+    "name": "赛博朋克表单",
+    "desc": "霓虹色块，未来感输入表单",
+    "category": "赛博朋克",
+    "prompt": "请为我生成一个赛博朋克风格的表单，霓虹色块，未来感输入体验。"
+  },
+  {
+    "id": "minimalist-banner",
+    "imgUrl": "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80",
+    "name": "极简横幅",
+    "desc": "极简风格的横幅，留白与简洁线条",
+    "category": "极简主义",
+    "prompt": "请为我生成一个极简主义风格的横幅，留白、简洁线条。"
+  }
+] 

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>智能代码辅助设计平台 - Landing Page</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Noto+Sans+SC:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+  <script src="https://unpkg.com/framer-motion/dist/framer-motion.umd.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <style>body{background:#fff;}</style>
+</head>
+<body>
+  <nav class="liquidGlass-wrapper items-center justify-between px-8 py-4 mb-6" style="backdrop-filter:blur(8px);">
+    <div class="liquidGlass-text flex items-center gap-4">
+      <span class="text-2xl font-black gradient-text">智能代码辅助设计平台</span>
+      <a href="landing.html" class="bento-en hover:underline">首页</a>
+      <a href="shop.html" class="bento-en hover:underline">Prompt商城</a>
+      <a href="theme.html" class="bento-en hover:underline">主题库</a>
+      <a href="market.html" class="bento-en hover:underline">组件市场</a>
+    </div>
+    <div class="liquidGlass-text flex items-center gap-4">
+      <button class="bento-btn" onclick="window.location.href='shop.html'">立即体验</button>
+    </div>
+  </nav>
+  <!-- Banner区 -->
+  <section class="flex flex-col items-center justify-center text-center py-12" data-framer-motion>
+    <div class="bento-big bento-highlight mb-4 zh">让创意显化为Prompt</div>
+    <div class="bento-en mb-6 en">Empower your ideas. Generate beautiful UI code with AI.</div>
+    <img class="banner-img mb-6" src="https://i.ibb.co/xtN61cRf/Comfy-UI-Output-4-1.png" style="width:340px;max-width:90vw;border-radius:1.5rem;box-shadow:0 4px 32px #b6d4fa;">
+    <button class="bento-btn banner-btn" onclick="window.location.href='shop.html'">立即体验</button>
+  </section>
+  <!-- Bento Grid区块：核心卖点 -->
+  <section class="bento-grid max-w-7xl mx-auto">
+    <div class="liquidGlass-wrapper bento-card" data-framer-motion>
+      <div class="liquidGlass-effect"></div><div class="liquidGlass-tint"></div><div class="liquidGlass-shine"></div>
+      <div class="liquidGlass-text flex flex-col gap-2">
+        <span class="bento-num">01</span>
+        <span class="bento-big zh">Bento Grid风格</span>
+        <span class="bento-en en">Modern Bento UI</span>
+        <span class="mt-2">极简白底，天蓝高亮，液体玻璃卡片，科技感十足。</span>
+        <svg class="bento-line-svg" viewBox="0 0 300 80"><path d="M10,70 Q80,10 150,40 T290,60"/></svg>
+      </div>
+    </div>
+    <div class="liquidGlass-wrapper bento-card" data-framer-motion>
+      <div class="liquidGlass-effect"></div><div class="liquidGlass-tint"></div><div class="liquidGlass-shine"></div>
+      <div class="liquidGlass-text flex flex-col gap-2">
+        <span class="bento-num">02</span>
+        <span class="bento-big zh">AI驱动</span>
+        <span class="bento-en en">AI Powered</span>
+        <span class="mt-2">一键生成高质量Prompt与UI代码，提升设计开发效率。</span>
+        <svg class="bento-line-svg" viewBox="0 0 300 80"><path d="M10,40 Q80,70 150,20 T290,60"/></svg>
+      </div>
+    </div>
+    <div class="liquidGlass-wrapper bento-card" data-framer-motion>
+      <div class="liquidGlass-effect"></div><div class="liquidGlass-tint"></div><div class="liquidGlass-shine"></div>
+      <div class="liquidGlass-text flex flex-col gap-2">
+        <span class="bento-num">03</span>
+        <span class="bento-big zh">所见即所得</span>
+        <span class="bento-en en">WYSIWYG</span>
+        <span class="mt-2">实时预览，所见即所得，支持多端适配与导出。</span>
+        <svg class="bento-line-svg" viewBox="0 0 300 80"><path d="M10,60 Q80,20 150,70 T290,30"/></svg>
+      </div>
+    </div>
+    <div class="liquidGlass-wrapper bento-card" data-framer-motion>
+      <div class="liquidGlass-effect"></div><div class="liquidGlass-tint"></div><div class="liquidGlass-shine"></div>
+      <div class="liquidGlass-text flex flex-col gap-2">
+        <span class="bento-num">04</span>
+        <span class="bento-big zh">极致体验</span>
+        <span class="bento-en en">Ultimate UX</span>
+        <span class="mt-2">Apple官网级动效，流畅交互，极致响应式设计。</span>
+        <svg class="bento-line-svg" viewBox="0 0 300 80"><path d="M10,30 Q80,60 150,10 T290,70"/></svg>
+      </div>
+    </div>
+  </section>
+  <script>
+    // Framer Motion 滚动入场动效
+    function revealOnScroll() {
+      document.querySelectorAll('[data-framer-motion]').forEach(card => {
+        const rect = card.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 40) card.classList.add('in');
+        else card.classList.remove('in');
+      });
+    }
+    window.addEventListener('scroll', revealOnScroll);
+    window.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('[data-framer-motion]').forEach(card => card.classList.add('in'));
+      revealOnScroll();
+    });
+  </script>
+</body>
+</html> 
